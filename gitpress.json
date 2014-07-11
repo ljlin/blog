@@ -1,20 +1,20 @@
 {
-	"docs"      : {
-		"关于我的博客": "README.md",
-		"gitpress": "posts/gitpress",
-		"解题报告": "posts/oi"
-		"iOS开发" : "posts/iOS"
-		"旧博客文章" : "post/cnblogs"
-		"其他": "posts"
-	},	
-	"perpage"   : 10,
-	"template"  : "default",
-	"types"     : {
-		"\\.(md||markdown)$"   : "markdown", 
-		"\\.(js||css||json)$"  : "code",
-		"\\.html?$"            : "html",
-		".*"                   : "text"		
-	},
-	"title"  : "ljlin's Blog",
-	"comment"  : "on"
+    "docs"      : {
+        "关于我的博客": "README.md",
+        "gitpress": "posts/gitpress",
+        "解题报告": "posts/oi",
+        "iOS": "posts/iOS",
+        "旧博客文章": "posts/cnblogs",
+        "其他": "posts"
+    },
+    "perpage"   : 10,
+    "template"  : "default",
+    "types"     : {
+        "\\.(md||markdown)$"   : "markdown",
+        "\\.(js||css||json)$"  : "code",
+        "\\.html?$"            : "html",
+        ".*"                   : "text"
+    },
+    "title"  : "ljlin's Blog",
+    "comment"  : "on"
 }
