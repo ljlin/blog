@@ -16,5 +16,6 @@
         ".*"                   : "text"
     },
     "title"  : "ljlin's Blog",
+    "description" : "lalala",
     "comment"  : "on"
 }
