@@ -1,5 +1,5 @@
 #暑训day1解题报告#
-
+===
 *A - Painting the sticks*
 
 因为不能覆盖涂/涂两次，所以就数数有几个三个一块儿就行了。
@@ -21,7 +21,7 @@ int main()
 }
 ```
  
-
+- - -
 *B - "Ray, Pass me the dishes!"*
 
 线段树，没过，不知道是想错了还是写呲毛了。
@@ -193,7 +193,7 @@ int main()
 // 0  1  2 -2  5 -4 -5  9  5 -14
 ```
  
-
+- - -
 *C - Plucking fruits*
 
 最小瓶颈树，跟kruskal类似
@@ -260,7 +260,7 @@ int main()
     }
 }
 ```
-
+- - -
 *F - Remember the Word*
 
 动态规划f[i]表示单词的i前缀串划分为集合中字符的方案数
@@ -358,10 +358,11 @@ int main()
     return 0;
 }
 ```
+- - -
 *I - Cake slicing*
 
 4D/1D的动态规划，就是枚举这一刀是横切还是竖切，记忆化搜索。
-```
+```C++
 #include <iostream>
 #include <cstring>
 #include <cstdio>
@@ -399,7 +400,6 @@ int main(int argc, char const *argv[])
     while(cin>>n>>m>>k){
         memset(A,0,sizeof(A));
         memset(f,0,sizeof(f));
-
         for(int i=0;i<k;i++){
             int x,y;
             cin>>x>>y;
