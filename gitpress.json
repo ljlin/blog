@@ -1,0 +1,17 @@
+{
+	"docs"      : {
+		"关于我的博客": "README.md",
+		"gitpress": "posts/gitpress",
+		"其他": "posts"
+	},	
+	"perpage"   : 10,
+	"template"  : "pithiness",
+	"types"     : {
+		"\\.(md||markdown)$"   : "markdown", 
+		"\\.(js||css||json)$"  : "code",
+		"\\.html?$"            : "html",
+		".*"                   : "text"		
+	},
+	"title"  : "ljlin's Blog",
+	"comment"  : "on"
+}
