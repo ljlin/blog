@@ -8,7 +8,7 @@
         "其他": "posts"
     },
     "perpage"   : 10,
-    "template"  : "default",
+    "template"  : "slate",
     "types"     : {
         "\\.(md||markdown)$"   : "markdown",
         "\\.(js||css||json)$"  : "code",
