@@ -8,7 +8,7 @@
         "其他": "posts"
     },
     "perpage"   : 10,
-    "template"  : "tactile",
+    "template"  : "greyshade",
     "types"     : {
         "\\.(md||markdown)$"   : "markdown",
         "\\.(js||css||json)$"  : "code",
