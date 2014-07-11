@@ -1,6 +1,4 @@
-#暑训day1解题报告#
-
-
+#暑训day1解题报告
 
 *A - Painting the sticks*
 
