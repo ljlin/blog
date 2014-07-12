@@ -125,3 +125,131 @@ int main()
 	}
 }
 ```
+
+***
+
+##D - Find the Outlier
+高斯消元，枚举一个，剩下的进行消元。如果枚举的那个是有矛盾的，那消元能得到一个零行，出于精度考虑，认为最后那个系数最小的才是零行。队友写的。模板题。
+```C++
+#include<iostream>
+#include<cstring>
+#include<cstdio>
+#define MAXN 100
+#define fabs(x) ((x)>0?(x):(-x))
+#define eps 1e-10
+using namespace std;
+double a[100][100], b[100] ,f[100],map[10][100] ;
+int n,m,d ;
+inline double pow(int x,int p)
+{
+    if(p==0) return 1 ;
+    if (x==0) return 0 ;
+    double ans = 1 ;
+    for (int i=1; i<=p; ++i) ans = ans* x ;
+    return ans ;
+}
+void exchange(int x,int y,int m){
+    double t ;
+    for (int i=0; i<m ; ++i) {
+        t= a[x][i]; a[x][i]=a[y][i] ; a[y][i]  =t ;
+    }
+
+}
+double gauss(int n, int m )
+{
+    int p ;
+    for (int k=0; k<m ; ++k) {
+        p = k ;
+       for (int j = k+1; j<n ; ++j )
+       if (fabs(a[j][k]) > fabs(a[p][k]))
+         p= j ;
+
+        exchange(k,p,m+1) ;
+
+       if (fabs(a[k][k])<eps) return 0 ;
+       for (int j=k+1; j<n ; ++j) {
+          double r = a[j][k] / a[k][k] ;
+          for (int i=k; i<=m; ++i)
+            a[j][i]-= r*a[k][i];
+       }
+    }
+    return fabs(a[n-1][m]);
+}
+int main()
+{
+    while (cin>>n , n ){
+        for (int i=0 ;i<=n+2; ++i) {
+            cin>>f[i] ;
+            for (int j=0; j<=n; ++j) map[i][j] = pow(i,j) ;
+        }
+        double max = 2341234123413 ; int ans ;
+        for (int k=0; k<=n+2; ++k) {
+            int m =0 ;
+            for (int i=0; i<=n+2; ++i) if (k!=i) {
+                for (int j=0; j<=n; ++j) a[m][j] = map[i][j];
+                a[m][n+1] = f[i] ;
+                ++m ;
+            }
+            double pp = gauss(n+2,n+1);
+            if (max>pp ){  max = pp ; ans = k ;}
+        }
+        cout <<ans<< endl ;
+    }
+}
+
+```
+
+***
+
+##F - Never Wait for Weights
+
+带权并查集模板题，队友写的。
+```C++
+#include <cstdio>
+#include <cstring>
+struct node {
+    int father, def ; // fa- son ;
+} ;
+const int maxn = 200000 ;
+node a[maxn] ;
+int n , m ;
+int find (int x)
+{
+   if (a[x].father!=x) {
+      int r = a[x].father ;
+      a[x].father = find(a[x].father) ;
+      a[x].def = a[r].def + a[x].def ;
+   }
+   return a[x].father ;
+}
+void Union(int x,int y,int d) // x- y =d
+{
+    int fx = find(x) ,fy= find(y) ;
+    a[fy].father = fx;
+    a[fy].def = a[x].def + d - a[y].def ;
+}
+int main()
+{
+    while (scanf("%d%d",&n,&m)!=EOF , n) {
+        for (int i=1; i<=n; ++i) {
+            a[i] .father = i ;
+            a[i] .def = 0 ;
+        }
+
+        for (int i=1; i<=m; ++i) {
+            getchar();
+            char c = getchar () ;
+            int x,y ,d;
+            if (c=='!') {
+                scanf("%d%d%d",&x,&y,&d) ;
+                Union(y,x,d);
+            }else {
+                scanf("%d%d",&x,&y) ;
+                int fx = find(x), fy = find(y) ;
+                if (fx!=fy) puts("UNKNOWN");
+                else printf("%d\n",a[x].def-a[y].def);
+            }
+        }
+    }
+}
+```
