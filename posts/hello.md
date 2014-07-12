@@ -9,9 +9,6 @@ int main()
 }
 ```
 
-
-![MacDown logo](http://d.pr/i/bEcp+)
-
 Hello there! I’m **MacDown**, the open source Markdown editor for OS X.
 
 Let me introduce myself.
@@ -27,11 +24,8 @@ The original Markdown syntax specification can be found [here](http://daringfire
 
 I support all the original Markdown syntaxes. Various non-standard ones can also be turned on/off from the **Markdown** preference pane:
 
-![Markdown preferences pane](http://d.pr/i/hsm4+)
-
 You can also specify extra HTML rendering options through the **Rendering** pane:
 
-![Rendering preferences pane](http://d.pr/i/jA0m+)
 
 ### Block Formatting
 
@@ -78,8 +72,6 @@ In either case, you can add an optional language ID at the end of the first line
 ```
 
 The language ID will be used to highlight the code inside if you tick the ***Enable highlighting in code blocks*** option. This is what happens if you enable it:
-
-![Syntax highlighting example](http://d.pr/i/9HM6+)
 
 Currently I support the follwing laguages:
 

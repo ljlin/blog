@@ -1,5 +1,11 @@
 #暑训day3解题报告
 
+
+比赛|94 - Andrew Stankevich's Contest, Warmup
+---|------
+地址|http://acm.zju.edu.cn/onlinejudge/showContestProblems.do?contestId=315
+题解|http://blog.watashi.ws/1322/andrew-stankevich-11-solution/
+
 ##A - Beer Problem
 最小费用最大流，从城市A到城市B每天运输啤酒上限为c，运输的价格p对应一条边从A到B容量为c费用为+p的边，源点就是城市1，添加一个汇点以后，对每个城市其啤酒售价为x就从该城市向汇点连接一条容量无穷大，费用为-x的边。
 ```
@@ -117,7 +123,9 @@ int main()
 ***
 ##C - Black and White
 
-考察想象力的题目，比较幸运思考的方向是对的，首先一个矩形区域的黑点和白点个数都是比较容易通过坐标求得。
+考察想象力的题目，比较幸运思考的方向是对的。
+
+首先一个矩形区域的黑点和白点个数都是比较容易通过坐标求得。
 
 1. 横纵坐标有一个为偶数则黑色白色相等，等于面积一半
 2. 如果都是奇数则黑色多一个
@@ -232,4 +240,121 @@ int main(int argc, char const *argv[])
 }
 
 ```
+***
+##I - Radio Waves
+感觉跟noip关押罪犯一样，就是变成完全图了，对所有边排个序，先尽量满足小的边两端发射不同信号，记录每个点敌对点（发射不同信号的点），以后每次合并时对边（u,v)，合并u和v的敌对点，v和u的敌对点。
 
+这有点个过程实际上是在维护一个二分图的不同分量，对每个X部或者Y部分别是一团并查集，然后对每个X部或Y部的点又能由敌对数组找到对方。所以类似于我在维护许多对儿两坨东西，然后这两坨也不知道谁是X谁是Y，但是能通过敌对数组联系，每次处理一条边就是把两对儿“两坨”变成一对儿“两坨”。
+
+```Cpp
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include <cstring>
+#include <cstdio>
+#include <queue>
+#define sqr(x) ((x)*(x))
+#define eps 1e-15
+using namespace std;
+const int maxn = 1200+100;
+
+struct edge
+{
+    edge(int _u=0,int _v=0,double _w=0):u(_u),v(_v),w(_w){};
+    int u,v;
+    double w;
+    bool operator < (const edge& rig) const {
+        return w<rig.w;
+    }
+};
+
+int n,X[maxn],Y[maxn],oppsite[maxn],f[maxn],color[maxn];
+edge E[maxn*maxn];
+double ans;
+int Find(int x){return x==f[x] ? x : f[x] = Find(f[x]);}
+void Union(int x,int y){
+    int fx=Find(x),fy=Find(y);
+    if(fx!=fy)
+        f[fx]=f[fy];
+}
+double dis(int a,int b){return sqrt(sqr(X[a]-X[b])+sqr(Y[a]-Y[b]));}
+
+void dfs(int u,int c){
+    //if(color[u]) return;
+    color[u]=c;
+    for(int i=1;i<=n;i++)
+        if(i!=u && dis(i,u)<ans+eps)
+          if (!color[i])  dfs(i,3-c);
+}
+
+bool BFS(double limit)
+{
+    memset(color,0,sizeof(color));
+    queue<int> Q;
+    for(int i=1;i<=n;i++){
+        if(color[i]==0){
+            color[i]=1;
+            Q.push(i);
+            while(!Q.empty()){
+                int u=Q.front();
+                Q.pop();
+                for(int v=1;v<=n;v++){
+                    if(v==u || dis(u,v)>limit-eps)continue;
+                    if(color[u]==color[v])return false;
+                    if(color[v]==0){
+                        color[v]=3-color[u];
+                        Q.push(v);
+                    }
+                }
+            }
+        }
+    }
+    return true;
+}
+int main()
+{
+    while(cin>>n){
+        int m=0;
+        for (int i = 1; i <= n; ++i)
+             scanf("%d%d",&X[i],&Y[i]);
+        for (int i = 1; i <= n; ++i)
+            for (int j = i+1; j <= n; ++j)
+                    E[m++]=edge(i,j,dis(i,j));
+        sort(E,E+m);
+        /*
+        for (int i = 0; i < m; ++i)
+        {
+            cout<<E[i].u<<' '<<E[i].v<<' '<<sqrt(E[i].w)<<endl;
+        }
+        */
+
+        for(int i=1;i<=n;i++) f[i]=i;
+        memset(oppsite,0,sizeof(oppsite));
+
+        ans = E[m-1].w;
+        for (int i = 0; i < m; ++i)
+        {
+            if(Find(E[i].u)==Find(E[i].v)){
+                ans=E[i].w;
+                break;
+            }
+            if(oppsite[E[i].u]==0) oppsite[E[i].u]=E[i].v;
+            if(oppsite[E[i].v]==0) oppsite[E[i].v]=E[i].u;
+
+            Union(E[i].u,oppsite[E[i].v]);
+            Union(E[i].v,oppsite[E[i].u]);
+
+        }
+
+        printf("%.10f\n",ans/2);
+        for(int i=1;i<=n;i++){
+            if (f[i]==i)
+            {
+                cout
+            }
+            printf("%d%c",," \n"[i==n]);
+        }
+    }
+    return 0;
+}
+```
