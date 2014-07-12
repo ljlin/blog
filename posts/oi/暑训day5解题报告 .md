@@ -65,6 +65,7 @@ int main()
 4h+10cnt+20(h-p)<=lim |对于目的地在p的乘客。电梯在h停，人再下几层| 取h最大，计算新的停靠点
 4p+10cnt+20(p-h)<=lim|目的地在p的旅客如果能在h下电梯，然后自己向上爬几层在lim之内到达就不必考虑|取p最大，得到新的需要考虑的目的地
 
+
 ```C++
 #include <iostream>
 #include <cstring>
