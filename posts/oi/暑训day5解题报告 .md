@@ -1,5 +1,58 @@
 #暑训day5解题报告
 
+##A - Special Experiment
+比赛的时候读出来是最大权独立集，但是没注意题目说明了给的是一棵树。然后就傻逼了。正确做法是TreeDP。分别讨论一下父亲要还是不要。
+```C++
+#include <cstdio>
+#include <cstring>
+int f[300][2] ,ad[600],pre[600],v[600],a[300],tot,n,m ;
+bool exist[1000001],vis[600];
+inline int abs(int x) { return x>0 ? x: -x; }
+inline int max(int x ,int y) { return x>y ? x : y ; }
+void add(int x,int y)
+{
+    pre[++tot]=ad[x] ;
+    ad[x] = tot;
+    v[tot] =y ;
+}
+void dfs(int x)
+{
+    vis[x] = 1;
+    f[x][1] = a[x] ;
+    f[x][0]= 0;
+    for (int j=ad[x]; j; j=pre[j]){
+        if(!vis[v[j]]) {
+            dfs(v[j]) ;
+            f[x][0] += max(f[v[j]][1], f[v[j]][0] )  ;
+            f[x][1] += f[v[j]][0] ;
+        }
+    }
+}
+int main()
+{
+    while (scanf("%d%d",&n,&m),n) {
+        for (int i=1; i<=n; ++i) scanf("%d",&a[i]);
+        memset(exist, 0, sizeof(exist)) ;
+        for(int i=1; i<=m; ++i) {
+            int x;
+            scanf("%d",&x);
+            exist[x] =1 ;
+        }
+        tot = 0;
+        memset(ad,0 ,sizeof(ad));
+        for (int i=1; i<=n; ++i)
+            for (int j=i+1; j<=n; ++j) if (exist[abs(a[i]-a[j])]) {
+                add(i,j);
+                add(j,i);
+            }
+        memset(f,0,sizeof(f));
+        memset(vis,0,sizeof(vis));
+        dfs(1) ;
+        printf("%d\n",max(f[1][1],f[1][0]));
+    }
+}
+```
+
 ##B - Elevator Stopping Plan
 
 学了一下网上找到了[贪心的题解](http://blog.csdn.net/zhanglizhe_cool/article/details/5639257)。二分答案以后贪心验证。第一，在lim时间内自己爬楼梯能到达目的地的话就完全不乘电梯。然后验证其他的楼层。首先为了方便，把楼层从0开始重新标号，用p表示电梯现在停靠的楼层，用cnt表示到达这层之前停的次数。
